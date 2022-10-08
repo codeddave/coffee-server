@@ -8,11 +8,14 @@ import {
   Post,
   Query,
 } from "@nestjs/common"
+import { CoffeesService } from "./coffees.service"
 @Controller("coffees")
 export class CoffeesController {
+  constructor(private readonly coffeesService: CoffeesService) {}
+
   @Get()
   findAll(@Query() query) {
-    const {limit, offset} = query
+    const { limit, offset } = query
     return `This action returns all coffees. Limit: ${limit}, offset: ${offset}`
   }
   @Get(":id")
