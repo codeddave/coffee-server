@@ -6,15 +6,16 @@ import {
   Param,
   Patch,
   Post,
-  Query,
+  // Query,
 } from "@nestjs/common"
 import { CoffeesService } from "./coffees.service"
+import { CreateCoffeeDto } from "./dto/create-coffee.dto"
 @Controller("coffees")
 export class CoffeesController {
   constructor(private readonly coffeesService: CoffeesService) {}
 
   @Get()
-  findAll(@Query() query) {
+  findAll(/* @Query() query */) {
     //const { limit, offset } = query
     return this.coffeesService.findAll()
   }
@@ -23,8 +24,8 @@ export class CoffeesController {
     return this.coffeesService.findOne(id)
   }
   @Post()
-  create(@Body() body) {
-    return this.coffeesService.create(body)
+  create(@Body() createCoffeeDto: CreateCoffeeDto) {
+    return this.coffeesService.create(createCoffeeDto)
   }
   @Patch(":id")
   update(@Param("id") id: string, @Body() body) {
