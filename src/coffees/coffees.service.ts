@@ -33,7 +33,11 @@ export class CoffeesService {
   }
 
   async update(id: string, updateCoffeeDto: UpdateCoffeeDto) {
-    const existingCoffee = await this.findOne(id)
+    const existingCoffee = await this.coffeeModel.findOneAndUpdate(
+      { _id: id },
+      updateCoffeeDto,
+      { new: true },
+    )
     if (existingCoffee) {
       // update the existing entity
     }
