@@ -1,4 +1,4 @@
-import { Prop, Schema } from "@nestjs/mongoose"
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose"
 import { Document } from "mongoose"
 
 @Schema()
@@ -12,3 +12,5 @@ export class Coffee extends Document {
   @Prop([String])
   flavors: string[]
 }
+
+export const CoffeeSchema = SchemaFactory.createForClass(Coffee)
