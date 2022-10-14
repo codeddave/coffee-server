@@ -1,10 +1,5 @@
 import { UpdateCoffeeDto } from "./dto/update-coffee.dto"
-import {
-  HttpException,
-  HttpStatus,
-  Injectable,
-  NotFoundException,
-} from "@nestjs/common"
+import { Injectable, NotFoundException } from "@nestjs/common"
 import { InjectModel } from "@nestjs/mongoose"
 import { Model } from "mongoose"
 import { CreateCoffeeDto } from "./dto/create-coffee.dto"
@@ -23,7 +18,7 @@ export class CoffeesService {
   async findOne(id: string) {
     const coffee = await this.coffeeModel.findOne({ _id: id })
     if (!coffee) {
-      throw new NotFoundException(`Coffee with the id: ${id} `)
+      throw new NotFoundException(`Coffee with the id: ${id} not found `)
     }
     return coffee
   }
@@ -38,8 +33,8 @@ export class CoffeesService {
       updateCoffeeDto,
       { new: true },
     )
-    if (existingCoffee) {
-      // update the existing entity
+    if (!existingCoffee) {
+      throw new NotFoundException(`Coffee with the id: ${id} not found `)
     }
   }
 
