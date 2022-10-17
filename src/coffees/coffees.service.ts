@@ -48,4 +48,22 @@ export class CoffeesService {
   async remove(id: string) {
     await this.coffeeModel.findByIdAndRemove(id)
   }
+
+  async recommendCoffee(coffee: Coffee) {
+    const session = await this.connection.startSession()
+    session.startTransaction()
+
+    /*  this.eventModel.create({
+      name: "recomm"
+    })
+ */
+    try {
+      coffee.recommendations++
+      await session.commitTransaction()
+    } catch (error) {
+      await session.abortTransaction()
+    } finally {
+      await session.endSession()
+    }
+  }
 }
