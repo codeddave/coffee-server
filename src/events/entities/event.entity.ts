@@ -6,7 +6,7 @@ export class Event extends Document {
   @Prop()
   type: string
 
-  @Prop()
+  @Prop({ index: true })
   name: string
 
   //@Prop({type: String, required: true})
