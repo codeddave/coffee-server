@@ -53,12 +53,17 @@ export class CoffeesService {
     const session = await this.connection.startSession()
     session.startTransaction()
 
-    /*  this.eventModel.create({
-      name: "recomm"
-    })
- */
     try {
       coffee.recommendations++
+      this.eventModel.create(
+        {
+          name: "recommend_coffee",
+          type: "coffee",
+          payload: { coffeeId: coffee.id },
+        },
+        { session },
+      )
+      coffee.save({ session })
       await session.commitTransaction()
     } catch (error) {
       await session.abortTransaction()
