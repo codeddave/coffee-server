@@ -8,7 +8,14 @@ import { CoffeesModule } from "./coffees/coffees.module"
   imports: [
     CoffeesModule,
     TypeOrmModule.forRoot({
-      type: "",
+      type: "postgres",
+      host: "localhost",
+      port: 5432,
+      username: "postgres",
+      password: "pass123",
+      database: "postgres",
+      autoLoadEntities: true,
+      synchronize: true, //disable this in prod
     }),
   ],
   controllers: [AppController],
