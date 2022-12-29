@@ -13,10 +13,10 @@ export class Coffee {
   id: number
 
   @Column()
-  name: string
+  name: string // renamed name to tile to simulate migration use case
 
   @Column()
-  brand: string
+  brandino: string
 
   @Column({ default: 0 })
   recommendations: number
