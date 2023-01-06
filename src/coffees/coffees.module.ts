@@ -24,7 +24,11 @@ export class CoffeBrandsFactory {
     CoffeBrandsFactory,
     {
       provide: COFFEE_BRANDS,
-      useFactory: (brandsFactory: CoffeBrandsFactory) => brandsFactory.create(),
+      useFactory: async (connection): Promise<string[]> => {
+        //const coffeeBrands = await connection.query('SELECT * ...');
+        const coffeebrands = await Promise.resolve(["buddy brew", "nescafe"])
+        return coffeebrands
+      },
       inject: [CoffeBrandsFactory],
     },
   ],
