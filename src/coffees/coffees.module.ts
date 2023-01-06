@@ -1,5 +1,5 @@
 import { TypeOrmModule } from "@nestjs/typeorm"
-import { Injectable, Module } from "@nestjs/common"
+import { Injectable, Module, Scope } from "@nestjs/common"
 import { CoffeesController } from "./coffees.controller"
 import { CoffeesService } from "./coffees.service"
 import { Coffee } from "./entities/coffee.entity"
@@ -19,7 +19,16 @@ export class CoffeBrandsFactory {
 @Module({
   imports: [TypeOrmModule.forFeature([Coffee, Flavor, Event])],
   controllers: [CoffeesController],
+
   providers: [
+    CoffeesService,
+    {
+      provide: COFFEE_BRANDS,
+      useValue: ["buddy brew", "nescafe"],
+      scope: Scope.TRANSIENT,
+    },
+  ],
+  /*  providers: [
     CoffeesService,
     CoffeBrandsFactory,
     {
@@ -31,7 +40,7 @@ export class CoffeBrandsFactory {
       },
       inject: [CoffeBrandsFactory],
     },
-  ],
+  ], */
 
   /* providers: [
     CoffeesService,
