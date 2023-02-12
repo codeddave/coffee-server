@@ -7,6 +7,7 @@ import { CoffeeRatingModule } from "./coffee-rating/coffee-rating.module"
 import { DatabaseModule } from "./database/database.module"
 import { ConfigModule } from "@nestjs/config"
 import * as Joi from "joi"
+import appConfig from "./config/app.config"
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import * as Joi from "joi"
       envFilePath: ".environment" you can specify multiple paths by passing an array of strings. 
     }), */
     ConfigModule.forRoot({
+      load: [appConfig],
       validationSchema: Joi.object({
         DATABASE_HOST: Joi.required(),
         DATABASE_PORT: Joi.number().default(5432),
