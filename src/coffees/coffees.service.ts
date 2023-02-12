@@ -24,8 +24,11 @@ export class CoffeesService {
     //When using non-class-based Provider Tokens, use the @Inject decorator to inject the dependency
     @Inject(COFFEE_BRANDS) coffeBrands: string[],
   ) {
-    const databaseHost = this.configService.get<string>("DATABASE_HOST")
-    console.log(databaseHost)
+    const databaseHost = this.configService.get<string>(
+      "DATABASE_HOST",
+      "localhost",
+    )
+    console.log(databaseHost, ":yfyif")
   }
 
   async findAll(query: PaginationQueryDto) {
