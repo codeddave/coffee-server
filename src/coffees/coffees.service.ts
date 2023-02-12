@@ -8,6 +8,7 @@ import { Flavor } from "./entities/flavor.entity"
 import { PaginationQueryDto } from "src/common/dto/pagination-query.dto"
 import { Event } from "src/events/entities/event.entity"
 import { COFFEE_BRANDS } from "./coffees.constants"
+import { ConfigService } from "@nestjs/config"
 
 @Injectable()
 export class CoffeesService {
@@ -18,9 +19,14 @@ export class CoffeesService {
     private readonly flavorRepository: Repository<Flavor>,
     private readonly dataSource: DataSource, //injected DataSource object to create transaction
 
+    //inject config variables
+    private readonly configService: ConfigService,
     //When using non-class-based Provider Tokens, use the @Inject decorator to inject the dependency
     @Inject(COFFEE_BRANDS) coffeBrands: string[],
-  ) {}
+  ) {
+    const databaseHost = this.configService.get<string>("DATABASE_HOST")
+    console.log(databaseHost)
+  }
 
   async findAll(query: PaginationQueryDto) {
     const { limit, offset } = query
