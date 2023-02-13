@@ -8,7 +8,8 @@ import { Flavor } from "./entities/flavor.entity"
 import { PaginationQueryDto } from "src/common/dto/pagination-query.dto"
 import { Event } from "src/events/entities/event.entity"
 import { COFFEE_BRANDS } from "./coffees.constants"
-import { ConfigService } from "@nestjs/config"
+import { /*  ConfigService,  */ ConfigType } from "@nestjs/config"
+import coffeesConfig from "./config/coffees.config"
 
 @Injectable()
 export class CoffeesService {
@@ -19,16 +20,13 @@ export class CoffeesService {
     private readonly flavorRepository: Repository<Flavor>,
     private readonly dataSource: DataSource, //injected DataSource object to create transaction
 
-    //inject config variables
-    private readonly configService: ConfigService,
+    //inject config variables, access configs directly without the get method and get type safety
+    @Inject(coffeesConfig.KEY)
+    private readonly coffeesConfiguration: ConfigType<typeof coffeesConfig>,
     //When using non-class-based Provider Tokens, use the @Inject decorator to inject the dependency
     @Inject(COFFEE_BRANDS) coffeBrands: string[],
   ) {
-    const databaseHost = this.configService.get("DATABASE_HOST", "localhost")
-    //console.log(databaseHost, ":yfyif")
-
-    const coffeesConfig = this.configService.get("coffees.foo")
-    console.log(coffeesConfig, ":yfyif")
+    console.log(coffeesConfiguration, ":yfyif")
   }
 
   async findAll(query: PaginationQueryDto) {
