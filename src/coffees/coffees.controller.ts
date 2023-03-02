@@ -19,7 +19,6 @@ import { UpdateCoffeeDto } from "./dto/update-coffee.dto"
 export class CoffeesController {
   constructor(private readonly coffeesService: CoffeesService) {}
 
-  @UsePipes(ValidationPipe)
   @Get()
   findAll(@Query() query: PaginationQueryDto) {
     //offset/skip
@@ -35,7 +34,10 @@ export class CoffeesController {
     return this.coffeesService.create(createCoffeeDto)
   }
   @Patch(":id")
-  update(@Param("id") id: string, @Body() updateCoffeeDto: UpdateCoffeeDto) {
+  update(
+    @Param("id") id: string,
+    @Body(ValidationPipe) updateCoffeeDto: UpdateCoffeeDto,
+  ) {
     return this.coffeesService.update(id, updateCoffeeDto)
   }
 
