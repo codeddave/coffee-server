@@ -15,11 +15,11 @@ import { CoffeesService } from "./coffees.service"
 import { CreateCoffeeDto } from "./dto/create-coffee.dto"
 import { UpdateCoffeeDto } from "./dto/update-coffee.dto"
 
-@UsePipes(ValidationPipe)
 @Controller("coffees")
 export class CoffeesController {
   constructor(private readonly coffeesService: CoffeesService) {}
 
+  @UsePipes(ValidationPipe)
   @Get()
   findAll(@Query() query: PaginationQueryDto) {
     //offset/skip
