@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common"
+import { Module, ValidationPipe } from "@nestjs/common"
 import { TypeOrmModule } from "@nestjs/typeorm"
 import { AppController } from "./app.controller"
 import { AppService } from "./app.service"
@@ -8,6 +8,7 @@ import { DatabaseModule } from "./database/database.module"
 import { ConfigModule } from "@nestjs/config"
 import * as Joi from "joi"
 import appConfig from "./config/app.config"
+import { APP_PIPE } from "@nestjs/core"
 
 @Module({
   imports: [
@@ -23,7 +24,7 @@ import appConfig from "./config/app.config"
         synchronize: false, //disable this in prod
       }),
     }),
-    /*   
+    /*    
  specify custom path
  ConfigModule.forRoot({
       envFilePath: ".environment" you can specify multiple paths by passing an array of strings. 
@@ -41,6 +42,12 @@ import appConfig from "./config/app.config"
     DatabaseModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_PIPE,
+      useClass: ValidationPipe,
+    },
+  ],
 })
 export class AppModule {}
