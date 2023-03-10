@@ -7,6 +7,7 @@ import {
   Patch,
   Post,
   Query,
+  SetMetadata,
   UsePipes,
   ValidationPipe,
 } from "@nestjs/common"
@@ -19,6 +20,7 @@ import { UpdateCoffeeDto } from "./dto/update-coffee.dto"
 export class CoffeesController {
   constructor(private readonly coffeesService: CoffeesService) {}
 
+  @SetMetadata("isPublic", true)
   @Get()
   findAll(@Query() query: PaginationQueryDto) {
     //offset/skip
