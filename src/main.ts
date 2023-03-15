@@ -1,3 +1,4 @@
+import { TimeoutInterceptor } from "./common/interceptor/timeout.interceptor"
 import { WrapResponseInterceptor } from "./common/interceptors/wrap-response.interceptor"
 import { HttpExceptionFilter } from "./common/filters/http-exception.filter"
 import { ValidationPipe } from "@nestjs/common"
@@ -17,7 +18,10 @@ async function bootstrap() {
     }),
   )
   app.useGlobalFilters(new HttpExceptionFilter()),
-    app.useGlobalInterceptors(new WrapResponseInterceptor())
+    app.useGlobalInterceptors(
+      new WrapResponseInterceptor(),
+      new TimeoutInterceptor(),
+    )
   await app.listen(4000)
 }
 bootstrap()
