@@ -1,3 +1,4 @@
+import { ParseIntPipe } from "./../common/pipes/parse-int.pipe"
 import {
   Body,
   Controller,
@@ -25,12 +26,13 @@ export class CoffeesController {
   @Get()
   async findAll(@Query() query: PaginationQueryDto) {
     //offset/skip
-    await new Promise(resolve => setTimeout(resolve, 5000))
+    //await new Promise(resolve => setTimeout(resolve, 5000))
     return this.coffeesService.findAll(query)
   }
+  @Public()
   @Get(":id")
-  findOne(@Param("id") id: string) {
-    return this.coffeesService.findOne(id)
+  findOne(@Param("id", ParseIntPipe) id: number) {
+    return this.coffeesService.findOne("" + id)
   }
   @Post()
   create(@Body() createCoffeeDto: CreateCoffeeDto) {
