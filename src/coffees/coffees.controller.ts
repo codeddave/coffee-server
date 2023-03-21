@@ -18,11 +18,14 @@ import { CoffeesService } from "./coffees.service"
 import { CreateCoffeeDto } from "./dto/create-coffee.dto"
 import { UpdateCoffeeDto } from "./dto/update-coffee.dto"
 import { Protocol } from "../common/decorators/protocol.decorator"
+import { ApiForbiddenResponse, ApiResponse } from "@nestjs/swagger"
 
 @Controller("coffees")
 export class CoffeesController {
   constructor(private readonly coffeesService: CoffeesService) {}
 
+  // @ApiResponse({status:403, description:"Forbidden"})
+  @ApiForbiddenResponse({ description: "Forbidden" })
   @Public()
   @Get()
   async findAll(
