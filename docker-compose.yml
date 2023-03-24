@@ -1,10 +1,9 @@
-version: "3.3"
-
+version: "3"
 services:
   db:
-    image: mongo # container image to be used
+    image: postgres
     restart: always
-    ports: # expose ports in “host:container” format
-      - 27017:27017
-    environment: #env variables to pass into the container
-      MONGODB_DATABASE: coffees
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: pass123

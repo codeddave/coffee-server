@@ -1,17 +1,18 @@
-import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose"
-import mongoose, { Document } from "mongoose"
+import { Column, Entity, Index, PrimaryGeneratedColumn } from "typeorm"
 
-@Schema()
-export class Event extends Document {
-  @Prop()
+/* @Index(["name", "type"]) */ //create composite index
+@Entity()
+export class Event {
+  @PrimaryGeneratedColumn()
+  id: number
+
+  @Column()
   type: string
 
-  @Prop({ index: true })
+  @Index()
+  @Column()
   name: string
 
-  //@Prop({type: String, required: true})
-  @Prop(mongoose.SchemaTypes.Mixed)
+  @Column("json")
   payload: Record<string, any>
 }
-
-export const EventSchema = SchemaFactory.createForClass(Event)
