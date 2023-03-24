@@ -9,7 +9,7 @@ import { ConfigModule } from "@nestjs/config"
 import * as Joi from "joi"
 import appConfig from "./config/app.config"
 import { APP_PIPE } from "@nestjs/core"
-import { CommonModule } from './common/common.module';
+import { CommonModule } from "./common/common.module"
 
 @Module({
   imports: [
